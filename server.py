@@ -10,11 +10,12 @@ server.bind(("localhost", 9080))
 def listen_user(conn):
     while True:
         queston = conn.recv(100000000).decode()
-        try:
-            result = wikipedia.summary(queston)
-            conn.send(result.encode())
-        except Exception as exc:
-            conn.send(f"Error! {exc}".encode())
+        if queston != '':
+            try:
+                result = wikipedia.summary(queston)
+                conn.send(result.encode())
+            except Exception as exc:
+                conn.send(f"Error! {exc}".encode())
 
 print("[+]Server listen...")
 
